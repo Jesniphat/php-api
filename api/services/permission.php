@@ -11,15 +11,24 @@ class permission {
   }
 
   public function clearToken(){
-    $this->writeToken(0);
+    $this->writeToken([]);
   }
 
-  public function acceess($permission) {
+  public function writeToken(array $user) {
+    try {
+      $jwt = JWT::encode($user, $this->lock);
+      return $jwt;
+    } catch (Exception $e) {
+      throw new Exception($e->message());
+    }
+  }
+
+  public function readToken($permission) {
     try {
       $token = '';
 
       if (!$this->requestHeader || count($this->requestHeader) == 0) {
-        throw new decodeException('No token.');
+        throw new Exception('No token.');
       }
 
       $token = str_replace('Bearer ', '', $this->requestHeader['Authorization']);
@@ -50,6 +59,7 @@ class permission {
         'access' => false,
         'message' => $e->getMessage()
       ];
+      exit;
     }
   }
 

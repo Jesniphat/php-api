@@ -8,15 +8,39 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 include_once './vendor/autoload.php';
 include_once './controllers/baseController.php';
 include_once './services/routing.php';
+include_once './services/permission.php';
 
 $req = explode('/', $_SERVER['PATH_INFO']);
 // echo "req = " ; print_r($req);
 array_shift($req);
 
-switch ($req[0]) {
-  case 'check' :
-    router('checkController@checkTest',['admin']);
-    break;
-  case 'login' :
-    router('userController@login');
+$METHOD = $_SERVER['REQUEST_METHOD'];
+
+if ($METHOD === 'POST') {
+  switch ($req[0]) {
+    case 'check' :
+      router('checkController@checkTest',['admin']);
+      break;
+    case 'login' :
+      router('userController@login');
+    default :
+      methodNonFound();
+  }
+} else if ($METHOD === 'PUT') {
+  switch ($req[0]) {
+    default :
+      methodNonFound();
+  }
+} else if ($METHOD === 'GET') {
+  switch ($req[0]) {
+    default :
+      methodNonFound();
+  }
+} else if ($METHOD === 'DELETE') {
+  switch ($req[0]) {
+    default :
+      methodNonFound();
+  }
+} else {
+  methodNonFound();
 }

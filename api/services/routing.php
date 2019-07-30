@@ -1,6 +1,4 @@
 <?php
-include_once 'permission.php';
-
 
 function router($controller, $permission = []) {
   $base = new BaseController();
@@ -42,10 +40,19 @@ function checkPermission($param) {
   $heeader = apache_request_headers();
   
   $permission = new permission($heeader);
-  return $permission->acceess($param);
+  return $permission->readToken($param);
 }
 
 function responseJson($data) {
   echo json_encode($data, JSON_UNESCAPED_UNICODE);
+  exit;
+}
+
+function methodNonFound() {
+  http_response_code(400);
+  $error = [
+    'message' => 'METHOD NOT FOUND'
+  ];
+  echo json_encode($error, JSON_UNESCAPED_UNICODE);
   exit;
 }
