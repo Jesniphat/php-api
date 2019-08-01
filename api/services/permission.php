@@ -11,15 +11,21 @@ class permission {
   }
 
   public function clearToken(){
-    $this->writeToken([]);
+    return $this->writeToken([]);
   }
 
   public function writeToken(array $user) {
     try {
       $jwt = JWT::encode($user, $this->lock);
-      return $jwt;
+      return [
+        'writed' => true,
+        'token' => $jwt
+      ];
     } catch (Exception $e) {
-      throw new Exception($e->message());
+      return [
+        'writed' => false,
+        'errorMessage' => $e->getMessage()
+      ];
     }
   }
 

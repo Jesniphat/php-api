@@ -2,13 +2,15 @@
 
 class userController extends BaseController {
   public $request;
+  public $permission;
   function __construct($request) {
     $this->request = $request;
+    $this->permission = new permission();
   }
 
   public function login() {
     try {
-      $permission = new permission();
+      // $permission = new permission();
       $user = [
         'id' => 1,
         'name' => 'Jesse',
@@ -21,7 +23,7 @@ class userController extends BaseController {
       $audience_claim = 'THE_AUDIENCE';
       $issuedat_claim = time(); // issued at
       $notbefore_claim = $issuedat_claim + 10; //not before in seconds
-      $expire_claim = $issuedat_claim + 60000000; // expire time in seconds
+      $expire_claim = $issuedat_claim + 600000; // expire time in seconds
       $token = [
         'iss' => $issuer_claim,
         'aud' => $audience_claim,
@@ -31,15 +33,38 @@ class userController extends BaseController {
         'data' => $user
       ];
       
-      $jwt = $permission->writeToken($token);
+      $jwt = $this->permission->writeToken($token);
       // $jwt = JWT::encode($token, $permission->lock);
-      
+      if (!$jwt['writed']) {
+        throw new Exception($jwt['errorMessage']);
+      }
+
       return $this->response([
-        'token' => $jwt
+        'token' => $jwt['token']
       ], 200);
     } catch (Exception $e) {
       return $this->response([
-        'message' => $e->message()
+        'error' => true,
+        'message' => $e->getMessage()
+      ], 403);
+    }
+  }
+
+  public function logout() {
+    try {
+      $jwt = $this->permission->clearToken();
+      // $jwt = JWT::encode($token, $permission->lock);
+      if (!$jwt['writed']) {
+        throw new Exception($jwt['errorMessage']);
+      }
+
+      return $this->response([
+        'token' => $jwt['token']
+      ], 200);
+    } catch (Exception $e) {
+      return $this->response([
+        'error' => true,
+        'message' => $e->getMessage()
       ], 403);
     }
   }

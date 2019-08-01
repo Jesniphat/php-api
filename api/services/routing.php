@@ -7,6 +7,7 @@ function router($controller, $permission = []) {
 
   include_once './controllers/' . $controller[0] . '.php';
   $continue = ['access' => true];
+
   if (count($permission) > 0) {
     $continue = checkPermission($permission);
   }
@@ -37,9 +38,9 @@ function router($controller, $permission = []) {
 }
 
 function checkPermission($param) {
-  $heeader = apache_request_headers();
+  $header = apache_request_headers();
   
-  $permission = new permission($heeader);
+  $permission = new permission($header);
   return $permission->readToken($param);
 }
 

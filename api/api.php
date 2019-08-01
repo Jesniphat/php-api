@@ -33,6 +33,8 @@ if ($METHOD === 'POST') {
   }
 } else if ($METHOD === 'GET') {
   switch ($req[0]) {
+    case 'clearToken' : 
+      router('userController@logout');
     default :
       methodNonFound();
   }
