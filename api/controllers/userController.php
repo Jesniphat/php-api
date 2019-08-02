@@ -18,22 +18,8 @@ class userController extends BaseController {
         'email' => 'jesniphat@hotmail.com',
         'role' => 'admin'
       ];
-
-      $issuer_claim = 'JESSE_API'; // this can be the servername
-      $audience_claim = 'THE_AUDIENCE';
-      $issuedat_claim = time(); // issued at
-      $notbefore_claim = $issuedat_claim + 10; //not before in seconds
-      $expire_claim = $issuedat_claim + 600000; // expire time in seconds
-      $token = [
-        'iss' => $issuer_claim,
-        'aud' => $audience_claim,
-        'iat' => $issuedat_claim,
-        'nbf' => $notbefore_claim,
-        'exp' => $expire_claim,
-        'data' => $user
-      ];
       
-      $jwt = $this->permission->writeToken($token);
+      $jwt = $this->permission->writeToken($user);
       // $jwt = JWT::encode($token, $permission->lock);
       if (!$jwt['writed']) {
         throw new Exception($jwt['errorMessage']);

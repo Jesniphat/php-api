@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Route to controller and return data to frondend
+ * @param string $controller
+ * @param array $permission
+ * @return json
+ */
 function router($controller, $permission = []) {
   $base = new BaseController();
 
@@ -37,18 +43,33 @@ function router($controller, $permission = []) {
   }
 }
 
-function checkPermission($param) {
+/**
+ * Check permission if seted it
+ * @param array $permissionList
+ * @return jwt $token
+ */
+function checkPermission($permissionList) {
   $header = apache_request_headers();
-  
   $permission = new permission($header);
-  return $permission->readToken($param);
+  return $permission->readToken($permissionList);
 }
 
+/**
+ * Response json to frontend
+ * 
+ * @param array $data
+ * @return json
+ */
 function responseJson($data) {
   echo json_encode($data, JSON_UNESCAPED_UNICODE);
   exit;
 }
 
+/**
+ * Response error method not found
+ * 
+ * @return json
+ */
 function methodNonFound() {
   http_response_code(400);
   $error = [

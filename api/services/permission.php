@@ -10,13 +10,28 @@ class permission {
     $this->requestHeader = $requestHeader;
   }
 
+  /**
+   * Clear token and return to frontend
+   * 
+   * @access public
+   * @return array token key
+   */
   public function clearToken(){
     return $this->writeToken([]);
   }
 
+
+  /**
+   * Write token
+   * 
+   * @param array $user
+   * @access public
+   * @return array token
+   */
   public function writeToken(array $user) {
     try {
-      $jwt = JWT::encode($user, $this->lock);
+      $token = $this->initData($user);
+      $jwt = JWT::encode($token, $this->lock);
       return [
         'writed' => true,
         'token' => $jwt
@@ -29,6 +44,39 @@ class permission {
     }
   }
 
+
+  /**
+   * Init data for gen token
+   * 
+   * @param array $user
+   * @return array $token
+   */
+  private function initData(array $user) {
+    $issuer_claim = 'JESSE_API'; // this can be the servername
+    $audience_claim = 'THE_AUDIENCE';
+    $issuedat_claim = time(); // issued at
+    $notbefore_claim = $issuedat_claim + 10; //not before in seconds
+    $expire_claim = $issuedat_claim + 600000; // expire time in seconds
+    $token = [
+      'iss' => $issuer_claim,
+      'aud' => $audience_claim,
+      'iat' => $issuedat_claim,
+      'nbf' => $notbefore_claim,
+      'exp' => $expire_claim,
+      'data' => $user
+    ];
+
+    return $token;
+  }
+
+
+  /**
+   * Read token key
+   * 
+   * @param array $permission
+   * @access public
+   * @return array can access and user data ['access', 'user]
+   */
   public function readToken($permission) {
     try {
       $token = '';
@@ -57,6 +105,8 @@ class permission {
           'access' => true,
           'user' => []
         ];
+      } else if ($decoded && is_array($decoded->data) && count($decoded->data) == 0) {
+        throw new Exception('No user login');
       } else {
         throw new Exception('Can not access.');
       }

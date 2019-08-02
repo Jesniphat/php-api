@@ -4,17 +4,52 @@ class BaseController {
   public $requests = [];
 
   function __construct() {
+    $this->getParam();
+  }
+
+
+  /**
+   * Get body data and query string
+   * it will set all data to property $requests
+   * 
+   * @access private
+   * @return json error or void
+   */
+  private function getParam() {
     $input = file_get_contents('php://input');
-    $this->requests = array();
+    $queryString = $_SERVER['QUERY_STRING'];
+
     try {
       if ($input) {
         $this->requests['body'] = json_decode($input, true);
       }
+
+      if ($queryString != '') {
+        $asArr = explode( '&', $queryString );
+        foreach( $asArr as $val ){
+          $tmp = explode( '=', $val );
+          $query[ $tmp[0] ] = $tmp[1];
+        }
+        $this->requests['query'] = $query;
+      }
     } catch (Exception $e) {
-      print_r($e);
+      $error = $this->response([
+        'error' => $e->getMessage(),
+        'more' => 'can not map body or query string'
+      ], 400);
+      return responseJson($error);
     }
   }
 
+
+  /**
+   * Handel response code
+   * 
+   * @param array $data
+   * @param int $code
+   * @access public
+   * @return array $data
+   */
   public function response($data, $code = 200) {
     http_response_code($code);
     return $data;
