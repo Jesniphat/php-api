@@ -38,6 +38,9 @@ function router($controller, $permission = []) {
   $controller = new $class($request);
   
   $res = $controller->$medthod();
+  if ($continue['token']) {
+    $res['newToken'] = $continue['token'];
+  }
   if ($res) {
     responseJson($res);
   }
@@ -51,7 +54,7 @@ function router($controller, $permission = []) {
 function checkPermission($permissionList) {
   $header = apache_request_headers();
   $permission = new permission($header);
-  return $permission->readToken($permissionList);
+  return $permission->getToken($permissionList);
 }
 
 /**

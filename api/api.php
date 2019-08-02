@@ -54,6 +54,8 @@ if ($METHOD === 'POST') {
   switch ($req) {
     case 'clearToken' : 
       router('userController@logout');
+    case 'getCheck' :
+      router('checkController@checkMore');
     default :
       methodNonFound();
   }

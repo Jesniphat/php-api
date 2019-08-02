@@ -19,14 +19,15 @@ class userController extends BaseController {
         'role' => 'admin'
       ];
       
-      $jwt = $this->permission->writeToken($user);
+      $jwt = $this->permission->writeToken($user, true);
       // $jwt = JWT::encode($token, $permission->lock);
       if (!$jwt['writed']) {
         throw new Exception($jwt['errorMessage']);
       }
 
       return $this->response([
-        'token' => $jwt['token']
+        'token' => $jwt['token'],
+        'refrash' => $jwt['refresh']
       ], 200);
     } catch (Exception $e) {
       return $this->response([
