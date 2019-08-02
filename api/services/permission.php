@@ -39,11 +39,17 @@ class permission {
         $refreshTimeOut = 60;
         $refreshToken = $this->initData($user, $refreshTimeOut);
         $refreshJwt = JWT::encode($refreshToken, $this->lock);
+
+        return [
+          'writed' => true,
+          'token' => $jwt,
+          'refresh' => $refreshJwt
+        ];
       }
+      
       return [
         'writed' => true,
-        'token' => $jwt,
-        'refresh' => $refreshJwt
+        'token' => $jwt
       ];
     } catch (Exception $e) {
       return [
