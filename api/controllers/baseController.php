@@ -17,20 +17,14 @@ class BaseController {
    */
   private function getParam() {
     $input = file_get_contents('php://input');
-    $queryString = $_SERVER['QUERY_STRING'];
 
     try {
       if ($input) {
         $this->requests['body'] = json_decode($input, true);
       }
 
-      if ($queryString != '') {
-        $asArr = explode( '&', $queryString );
-        foreach( $asArr as $val ){
-          $tmp = explode( '=', $val );
-          $query[ $tmp[0] ] = $tmp[1];
-        }
-        $this->requests['query'] = $query;
+      if (count($_REQUEST) > 0) {
+        $this->requests['query'] = $_REQUEST;
       }
     } catch (Exception $e) {
       $error = $this->response([
