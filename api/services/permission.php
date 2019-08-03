@@ -10,6 +10,33 @@ class permission {
     $this->requestHeader = $requestHeader;
   }
 
+
+  /**
+   * Init data for gen token
+   * 
+   * @param array $user
+   * @param int $timeOut
+   * @return array $token
+   */
+  private function initData(array $user, int $timeOut) {
+    $issuer_claim = 'JESSE_API'; // this can be the servername
+    $audience_claim = 'THE_AUDIENCE';
+    $issuedat_claim = time(); // issued at
+    $notbefore_claim = $issuedat_claim + 10; //not before in seconds
+    $expire_claim = $issuedat_claim + $timeOut; // expire time in seconds
+    $token = [
+      'iss' => $issuer_claim,
+      'aud' => $audience_claim,
+      'iat' => $issuedat_claim,
+      'nbf' => $notbefore_claim,
+      'exp' => $expire_claim,
+      'data' => $user
+    ];
+
+    return $token;
+  }
+
+
   /**
    * Clear token and return to frontend
    * 
@@ -46,7 +73,7 @@ class permission {
           'refresh' => $refreshJwt
         ];
       }
-      
+
       return [
         'writed' => true,
         'token' => $jwt
@@ -61,100 +88,13 @@ class permission {
 
 
   /**
-   * Init data for gen token
-   * 
-   * @param array $user
-   * @param int $timeOut
-   * @return array $token
-   */
-  private function initData(array $user, int $timeOut) {
-    $issuer_claim = 'JESSE_API'; // this can be the servername
-    $audience_claim = 'THE_AUDIENCE';
-    $issuedat_claim = time(); // issued at
-    $notbefore_claim = $issuedat_claim + 10; //not before in seconds
-    $expire_claim = $issuedat_claim + $timeOut; // expire time in seconds
-    $token = [
-      'iss' => $issuer_claim,
-      'aud' => $audience_claim,
-      'iat' => $issuedat_claim,
-      'nbf' => $notbefore_claim,
-      'exp' => $expire_claim,
-      'data' => $user
-    ];
-
-    return $token;
-  }
-
-  /**
-   * Get token
-   * 
-   * @param array $permission
-   * @access public
-   * @return array $token
-   */
-  public function getToken(array $permission) {
-    try {
-      if (count($permission) == 0) {
-        return [
-          'access' => true,
-          'user' => []
-        ];
-      }
-
-      $token = $this->readToken($permission);
-
-      if ($token['access']) {
-        return $token;
-      }
-
-      if (!$token['access'] && $token['message'] == 'Expired token' && $this->requestHeader['RefreshToken']) {
-        $newToken = $this->refreshToken($permission);
-        return $this->getTokenByRequest($newToken);
-      } else {
-        throw new Exception($token['message']);
-      }
-    } catch (Exception $e) {
-      return [
-        'access' => false,
-        'message' => $e->getMessage()
-      ];
-    }
-  }
-
-
-  public function getTokenByRequest(array $newToken) {
-    try {
-      if ($newToken['refresh'] && $newToken['newToken']['writed']) {
-        return [
-          'access' => $newToken['refresh'],
-          'user' => $newToken['user'],
-          'token' => [
-            'token' => $newToken['newToken']['token'],
-            'refrashToken' => $newToken['newToken']['refresh']
-          ]
-        ];
-      } else if ($newToken['refresh'] && !$newToken['newToken']['writed']) {
-        throw new Exception($newToken['newToken']['errorMessage']);
-      } else {
-        throw new Exception($newToken['message']);
-      }
-    } catch (Exception $e) {
-      return [
-        'access' => false,
-        'message' => $e->getMessage()
-      ];
-    }
-  }
-
-
-  /**
    * Read token key
    * 
    * @param array $permission
-   * @access public
+   * @access private
    * @return array can access and user data ['access', 'user]
    */
-  public function readToken($permission) {
+  private function readToken($permission) {
     try {
       $token = '';
 
@@ -194,10 +134,10 @@ class permission {
   /**
    * refresh token
    * 
-   * @access public
+   * @access private
    * @return array token
    */
-  public function refreshToken($permission) {
+  private function refreshToken($permission) {
     try {
       $token = '';
       if (!$this->requestHeader || count($this->requestHeader) == 0) {
@@ -230,6 +170,75 @@ class permission {
     } catch (Exception $e) {
       return [
         'refresh' => false,
+        'message' => $e->getMessage()
+      ];
+    }
+  }
+
+
+  /**
+   * Get new token when refresh token
+   * 
+   * @param array new token from gen it
+   * @access private
+   * @return array token
+   */
+  private function getTokenByRefresh(array $newToken) {
+    try {
+      if ($newToken['refresh'] && $newToken['newToken']['writed']) {
+        return [
+          'access' => $newToken['refresh'],
+          'user' => $newToken['user'],
+          'token' => [
+            'token' => $newToken['newToken']['token'],
+            'refrashToken' => $newToken['newToken']['refresh']
+          ]
+        ];
+      } else if ($newToken['refresh'] && !$newToken['newToken']['writed']) {
+        throw new Exception($newToken['newToken']['errorMessage']);
+      } else {
+        throw new Exception($newToken['message']);
+      }
+    } catch (Exception $e) {
+      return [
+        'access' => false,
+        'message' => $e->getMessage()
+      ];
+    }
+  }
+
+
+  /**
+   * Get token
+   * 
+   * @param array $permission
+   * @access public
+   * @return array $token
+   */
+  public function getToken(array $permission) {
+    try {
+      if (count($permission) == 0) {
+        return [
+          'access' => true,
+          'user' => []
+        ];
+      }
+
+      $token = $this->readToken($permission);
+
+      if ($token['access']) {
+        return $token;
+      }
+
+      if (!$token['access'] && $token['message'] == 'Expired token' && $this->requestHeader['RefreshToken']) {
+        $newToken = $this->refreshToken($permission);
+        return $this->getTokenByRefresh($newToken);
+      } else {
+        throw new Exception($token['message']);
+      }
+    } catch (Exception $e) {
+      return [
+        'access' => false,
         'message' => $e->getMessage()
       ];
     }
