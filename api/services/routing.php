@@ -41,8 +41,8 @@ function router($controller, $permission = []) {
   if ($continue['token']) {
     $res['newToken'] = $continue['token'];
   }
-// var_dump($res);
-  if ($res['isFile']) {
+
+  if ($res && $res['isFile']) {
     download($res['data']['path']);
   }
 
@@ -94,6 +94,12 @@ function download(string $path) {
       header('Content-Length: ' . filesize($file));
       readfile($file);
       exit;
+  } else {
+    $responseError = $base->response([
+      'message' => 'Not file exits'
+    ], 400);
+
+    responseJson($responseError);
   }
 }
 
