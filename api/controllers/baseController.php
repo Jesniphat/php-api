@@ -48,4 +48,20 @@ class BaseController {
     http_response_code($code);
     return $data;
   }
+
+  /**
+   * Handel response file
+   * 
+   * @param array $data
+   * @param int $code
+   * @access public
+   * @return array $data
+   */
+  public function download($data, $code = 200) {
+    http_response_code($code);
+    return [
+      'isFile' => true,
+      'data' => $data
+    ];
+  }
 }

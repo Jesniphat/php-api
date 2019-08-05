@@ -1,4 +1,4 @@
-FROM php:7.2-apache
+FROM php:7.3-apache
 
 RUN a2enmod rewrite
 
@@ -32,9 +32,9 @@ RUN docker-php-ext-install \
 
 RUN apt-get install libmcrypt-dev libreadline-dev -y
 
-RUN pecl install mcrypt-1.0.1 \
-    && pecl install redis-4.0.0 \
-    && pecl install xdebug-2.6.0 \
+RUN pecl install mcrypt-1.0.2 \
+    && pecl install redis-5.0.0 \
+    && pecl install xdebug-2.7.2 \
     && docker-php-ext-enable mcrypt redis xdebug
 
 # อันนี้ลงเพิ่มเติมคือ composer นั้นเอง เป็นตัว package manager สำหรับการจัดการพวก dependency ของภาษา php ครับ
