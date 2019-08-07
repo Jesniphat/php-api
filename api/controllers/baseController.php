@@ -31,7 +31,8 @@ class BaseController {
         'error' => $e->getMessage(),
         'more' => 'can not map body or query string'
       ], 400);
-      return responseJson($error);
+      return router::responseJson($error);
+      exit;
     }
   }
 

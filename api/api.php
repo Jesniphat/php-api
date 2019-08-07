@@ -37,34 +37,34 @@ $METHOD = $_SERVER['REQUEST_METHOD'];
 if ($METHOD === 'POST') {
   switch ($req) {
     case 'check' :
-      router('checkController@checkTest',['admin']);
+      router::_('checkController@checkTest',['admin']);
       break;
     case 'login' :
-      router('userController@login');
+      router::_('userController@login');
     default :
-      methodNonFound();
+    router::methodNonFound();
   }
 } else if ($METHOD === 'PUT') {
   switch ($req) {
     default :
-      methodNonFound();
+    router::methodNonFound();
   }
 } else if ($METHOD === 'GET') {
   switch ($req) {
     case 'clearToken' : 
-      router('userController@logout');
+      router::_('userController@logout');
     case 'getCheck' :
-      router('checkController@checkMore');
+      router::_('checkController@checkMore');
     case 'checkFileLoad' :
-      router('checkController@checkFileLoad');
+      router::_('checkController@checkFileLoad');
     default :
-      methodNonFound();
+      router::methodNonFound();
   }
 } else if ($METHOD === 'DELETE') {
   switch ($req) {
     default :
-      methodNonFound();
+      router::methodNonFound();
   }
 } else {
-  methodNonFound();
+  router::methodNonFound();
 }
