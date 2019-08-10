@@ -1,5 +1,8 @@
 <?php
 
+namespace Services;
+use \Controllers;
+
 class router {
   /**
    * Route to controller and return data to frondend
@@ -29,7 +32,7 @@ class router {
     }
 
     
-    $class = $controller[0];
+    $class = '\Controllers\\' . $controller[0];
     $medthod = $controller[1];
     
     $request = [

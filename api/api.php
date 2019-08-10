@@ -14,6 +14,9 @@ include_once './vendor/autoload.php';
 include_once './services/baseController.php';
 include_once './services/routing.php';
 include_once './services/permission.php';
+include_once './Exceptions/Exception.php';
+
+use Services\router;
 
 /**
  * Handel request url

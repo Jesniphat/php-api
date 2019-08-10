@@ -1,5 +1,8 @@
 <?php
 
+namespace Controllers;
+use Services\BaseController;
+
 class checkController extends BaseController {
   public $request;
 

@@ -1,5 +1,10 @@
 <?php
+
+namespace Services;
 use \Firebase\JWT\JWT;
+use \Firebase\JWT\ExpiredException;
+use \Firebase\JWT\SignatureInvalidException;
+use \Exception\Exception;
 
 class permission {
   public $lock = "p@ssw0rd";
@@ -57,7 +62,7 @@ class permission {
    */
   public function writeToken(array $user, bool $refresh = false) {
     try {
-      $timeOut = 900;
+      $timeOut = 70;
       $token = $this->initData($user, $timeOut);
       $jwt = JWT::encode($token, $this->lock);
 
@@ -127,6 +132,16 @@ class permission {
         'access' => false,
         'message' => $e->getMessage()
       ];
+    } catch (ExpiredException $e) {
+      return [
+        'access' => false,
+        'message' => $e->getMessage()
+      ];
+    } catch (SignatureInvalidException $e) {
+      return [
+        'access' => false,
+        'message' => $e->getMessage()
+      ];
     }
   }
 
@@ -168,6 +183,16 @@ class permission {
         throw new Exception('Can not access.');
       }
     } catch (Exception $e) {
+      return [
+        'refresh' => false,
+        'message' => $e->getMessage()
+      ];
+    } catch (ExpiredException $e) {
+      return [
+        'refresh' => false,
+        'message' => $e->getMessage()
+      ];
+    } catch (SignatureInvalidException $e) {
       return [
         'refresh' => false,
         'message' => $e->getMessage()

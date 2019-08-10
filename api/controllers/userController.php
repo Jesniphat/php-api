@@ -1,5 +1,9 @@
 <?php
 
+namespace Controllers;
+use Services\BaseController;
+use Services\permission;
+
 class userController extends BaseController {
   public $request;
   public $permission;
