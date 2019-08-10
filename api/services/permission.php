@@ -4,7 +4,7 @@ namespace Services;
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\ExpiredException;
 use \Firebase\JWT\SignatureInvalidException;
-use \Exception\Exception;
+use Exception;
 
 class permission {
   public $lock = "p@ssw0rd";

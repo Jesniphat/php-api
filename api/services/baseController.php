@@ -1,7 +1,7 @@
 <?php
 
 namespace Services;
-use \Exception\Exception;
+use Exception;
 
 class BaseController {
   public $requests = [];
