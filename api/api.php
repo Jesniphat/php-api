@@ -1,9 +1,6 @@
 <?php
-/**
- * Handel header data
- */
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST");
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: OPTIONS, GET, POST');
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, RefreshToken, X-Requested-With");
 
@@ -36,6 +33,9 @@ $METHOD = $_SERVER['REQUEST_METHOD'];
 /**
  * Route to controller
  */
+if ($METHOD === 'OPTIONS') {
+  exit;
+}
 if ($METHOD === 'POST') {
   switch ($req) {
     case 'check' :
@@ -43,6 +43,8 @@ if ($METHOD === 'POST') {
       break;
     case 'login' :
       router::_('userController@login');
+    case 'refresh-token' :
+      router::_('userController@refreshToken');
     default :
     router::methodNonFound();
   }

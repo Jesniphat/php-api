@@ -62,7 +62,7 @@ class permission {
    */
   public function writeToken(array $user, bool $refresh = false) {
     try {
-      $timeOut = 70;
+      $timeOut = 60;
       $token = $this->initData($user, $timeOut);
       $jwt = JWT::encode($token, $this->lock);
 
@@ -149,53 +149,48 @@ class permission {
   /**
    * refresh token
    * 
-   * @access private
+   * @access public
    * @return array token
    */
-  private function refreshToken($permission) {
+  public function refreshToken() {
     try {
       $token = '';
       if (!$this->requestHeader || count($this->requestHeader) == 0) {
         throw new Exception('No token.');
       }
+      
+      $token = str_replace('Bearer ', '', $this->requestHeader['Authorization']);
 
-      $token = str_replace('Bearer ', '', $this->requestHeader['RefreshToken']);
       $decoded = JWT::decode($token, $this->lock, array('HS256'));
-
-      if (!$decoded) {
-        throw new Exception('No token.');
-      } else if (count($permission) > 0 && in_array($decoded->data->role, $permission)) {
+      if ($decoded) {
         $user = [
           'id' => $decoded->data->id,
           'role' => $decoded->data->role,
           'name' => $decoded->data->name,
           'email' => $decoded->data->email
         ];
-
-        return [
-          'refresh' => true,
-          'user' => $user,
-          'newToken' => $this->writeToken($user, true)
-        ];
-      } else if ($decoded && is_array($decoded->data) && count($decoded->data) == 0) {
+        return $this->writeToken($user, true);
+      }  else if ($decoded && is_array($decoded->data) && count($decoded->data) == 0) {
         throw new Exception('No user login');
+      } else if (!$decoded) {
+        throw new Exception('No token.');
       } else {
         throw new Exception('Can not access.');
       }
     } catch (Exception $e) {
       return [
-        'refresh' => false,
-        'message' => $e->getMessage()
+        'writed' => false,
+        'errorMessage' => $e->getMessage()
       ];
     } catch (ExpiredException $e) {
       return [
-        'refresh' => false,
-        'message' => $e->getMessage()
+        'writed' => false,
+        'errorMessage' => $e->getMessage()
       ];
     } catch (SignatureInvalidException $e) {
       return [
-        'refresh' => false,
-        'message' => $e->getMessage()
+        'writed' => false,
+        'errorMessage' => $e->getMessage()
       ];
     }
   }
@@ -253,11 +248,6 @@ class permission {
 
       if ($token['access']) {
         return $token;
-      }
-
-      if (!$token['access'] && $token['message'] == 'Expired token' && $this->requestHeader['RefreshToken']) {
-        $newToken = $this->refreshToken($permission);
-        return $this->getTokenByRefresh($newToken);
       } else {
         throw new Exception($token['message']);
       }
