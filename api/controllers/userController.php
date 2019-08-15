@@ -3,6 +3,7 @@
 namespace Controllers;
 use Services\BaseController;
 use Services\permission;
+use Exception;
 
 class userController extends BaseController {
   public $request;

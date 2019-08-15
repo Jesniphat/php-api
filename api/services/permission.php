@@ -69,11 +69,10 @@ class permission {
 
       $refreshJwt = '';
       if ($refresh) {
-        $refreshTimeOut = 6000000;
+        $refreshTimeOut = 100;
         $refreshToken = $this->initData($user, $refreshTimeOut);
         $refreshJwt = JWT::encode($refreshToken, $this->lock);
 
-        sleep(10);
         return [
           'writed' => true,
           'token' => $jwt,
@@ -81,7 +80,6 @@ class permission {
         ];
       }
 
-      sleep(10);
       return [
         'writed' => true,
         'token' => $jwt

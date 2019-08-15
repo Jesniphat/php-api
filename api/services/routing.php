@@ -63,7 +63,13 @@ class router {
   private function checkPermission($permissionList) {
     $header = apache_request_headers();
     $permission = new permission($header);
-    return $permission->getToken($permissionList);
+
+    // $checked = $permission->getToken($permissionList);
+    do {
+      $checked = $permission->getToken($permissionList);
+    } while (!$checked['access'] && stripos($checked['message'], 'not handle token prior to'));
+    // return $permission->getToken($permissionList);
+    return $checked;
   }
 
   /**
