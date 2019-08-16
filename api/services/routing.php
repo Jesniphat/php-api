@@ -23,10 +23,17 @@ class router {
     }
 
     if (!$continue['access']) {
-      $responseError = $base->response([
-        'message' => $continue['message']
-      ], 403);
-
+      switch ($continue['message']) {
+        case 'Expired token' :
+          $responseError = $base->response([
+            'message' => $continue['message']
+          ], 401);
+          break;
+        default :
+        $responseError = $base->response([
+          'message' => $continue['message']
+        ], 403); 
+      } 
       self::responseJson($responseError);
       return;
     }
