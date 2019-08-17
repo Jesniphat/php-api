@@ -64,7 +64,6 @@ class permission {
     try {
       $timeOut = 120;
       $token = $this->initData($user, $timeOut);
-      JWT::$leeway = 15;
       $jwt = JWT::encode($token, $this->lock);
 
       $refreshJwt = '';
