@@ -7,6 +7,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 /**
  * Inclode base file
  */
+include_once './config/config.php';
+include_once './database/db.php';
 include_once './vendor/autoload.php';
 include_once './services/baseController.php';
 include_once './services/routing.php';

@@ -62,14 +62,14 @@ class permission {
    */
   public function writeToken(array $user, bool $refresh = false) {
     try {
-      $timeOut = 60;
+      $timeOut = 120;
       $token = $this->initData($user, $timeOut);
       JWT::$leeway = 15;
       $jwt = JWT::encode($token, $this->lock);
 
       $refreshJwt = '';
       if ($refresh) {
-        $refreshTimeOut = 100;
+        $refreshTimeOut = 1500;
         $refreshToken = $this->initData($user, $refreshTimeOut);
         $refreshJwt = JWT::encode($refreshToken, $this->lock);
 

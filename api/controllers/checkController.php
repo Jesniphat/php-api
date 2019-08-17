@@ -2,6 +2,7 @@
 
 namespace Controllers;
 use Services\BaseController;
+use Database\DB;
 
 class checkController extends BaseController {
   public $request;
@@ -11,6 +12,7 @@ class checkController extends BaseController {
   }
 
   public function checkTest() {
+    // $pdo = DB::connect();
     return $this->response(['check' => 'ok', 'param' => $this->request], 200);
   }
 
