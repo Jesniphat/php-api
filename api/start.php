@@ -3,9 +3,9 @@
 chdir(__DIR__);
 $filePath = realpath(ltrim($_SERVER["REQUEST_URI"], '/'));
 if ($filePath && is_dir($filePath)){
-  // attempt to find an index file
-  foreach (['api.php', 'api.html'] as $indexFile){
-    if ($filePath = realpath($filePath . DIRECTORY_SEPARATOR . $indexFile)){
+  // attempt to find an api file
+  foreach (['api.php', 'api.html'] as $apiFile){
+    if ($filePath = realpath($filePath . DIRECTORY_SEPARATOR . $apiFile)){
       break;
     }
   }
@@ -15,7 +15,7 @@ if ($filePath && is_file($filePath)) {
   // 2. check for circular reference to router.php
   // 3. don't serve dotfiles
   if (strpos($filePath, __DIR__ . DIRECTORY_SEPARATOR) === 0 &&
-    $filePath != __DIR__ . DIRECTORY_SEPARATOR . 'router.php' &&
+    $filePath != __DIR__ . DIRECTORY_SEPARATOR . 'start.php' &&
     substr(basename($filePath), 0, 1) != '.'
   ) {
       if (strtolower(substr($filePath, -4)) == '.php') {
@@ -31,6 +31,6 @@ if ($filePath && is_file($filePath)) {
     echo "404 Not Found";
   }
 } else {
-  // rewrite to our index file
+  // rewrite to our api file
   include __DIR__ . DIRECTORY_SEPARATOR . 'api.php';
 }
