@@ -6,7 +6,7 @@ use PDO;
 use Exception;
 
 class DB {
-  public $conn;
+  public static $pdo;
   /**
    * @access public
    * @return mixed $conn
@@ -22,7 +22,7 @@ class DB {
 
     try {
       $config = new config();
-      return new PDO("mysql:host=$config->HOST;dbname=$config->DB;charset=utf8",$config->USERNAME,$config->PASSWORD,$opt);
+      self::$pdo = new PDO("mysql:host=$config->HOST;dbname=$config->DB;charset=utf8",$config->USERNAME,$config->PASSWORD,$opt);
     } catch (Exception $e) {
       http_response_code(500);
       $error = [
@@ -32,5 +32,9 @@ class DB {
       echo json_encode($error, JSON_UNESCAPED_UNICODE);
       exit;
     }
+  }
+
+  public static function disconnect() {
+    self::$pdo = null;
   }
 }
