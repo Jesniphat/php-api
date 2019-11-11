@@ -1,5 +1,5 @@
 <?php
-include_once './config/configUrl.php';
+include_once './bootstrap/app.php';
 use Services\router;
 
 /**
