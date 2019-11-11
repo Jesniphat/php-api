@@ -184,4 +184,13 @@ class router {
     echo json_encode($error, JSON_UNESCAPED_UNICODE);
     exit;
   }
+
+  public static function usesNotFound() {
+    http_response_code(400);
+    $error = [
+      'message' => 'USES NOT FOUND'
+    ];
+    echo json_encode($error, JSON_UNESCAPED_UNICODE);
+    exit;
+  }
 }
