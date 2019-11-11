@@ -5,12 +5,43 @@ use \Controllers;
 
 class router {
   /**
+   * Request url path
+   */
+  private static $reqUrl = [];
+  private static $param = [];
+
+
+  /**
+   * Set request url data lists
+   * @param array $request
+   * @access public
+   * @return void
+   */
+  public static function setUrlList(array $req): void {
+    if (isset($req) && count($req) > 0) {
+      self::$reqUrl = $req;
+    }
+  }
+
+  /**
+   * Set param url data lists
+   * @param array $request
+   * @access public
+   * @return void
+   */
+  public static function request(array $req): void {
+    if (isset($req) && count($req) > 0) {
+      self::$param = $req;
+    }
+  }
+
+  /**
    * Route to controller and return data to frondend
    * @param string $controller
    * @param array $permission
    * @return json
    */
-  public static function _($controller, $permission = []) {
+  public static function method($controller, $permission = []) {
     $base = new BaseController();
 
     $controller = explode('@', $controller);
@@ -42,9 +73,12 @@ class router {
     $class = '\Controllers\\' . $controller[0];
     $medthod = $controller[1];
     
+    // Set auth to request
     $request = [
-      'auth' => $continue['user']
+      'auth' => $continue['user'],
+      'request' => self::findRequest()
     ];
+    
     $request = array_merge($request, $base->requests);
     $controller = new $class($request);
     
@@ -77,6 +111,23 @@ class router {
     } while (!$checked['access'] && stripos($checked['message'], 'not handle token prior to'));
     // return $permission->getToken($permissionList);
     return $checked;
+  }
+
+  /**
+   * Set Requert
+   * @access private
+   * @return array $reqequire
+   */
+  private function findRequest(): array {
+    if (count(self::$param) > 0 && count(self::$reqUrl) > 0 && count(self::$param) === count(self::$reqUrl)) {
+      $req = [];
+      foreach (self::$param as $key => $val) {
+        $req[$val] = self::$reqUrl[$key];
+      }
+      return $req;
+    }
+
+    return [];
   }
 
   /**
