@@ -304,4 +304,4 @@
     exit;
   }
 
-  $router = new apps();
+  $route = new apps();

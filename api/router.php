@@ -4,30 +4,30 @@ include_once './bootstrap/app.php';
 /**
  * Route
  */
-$router->post('/check/iCheck/:id/:subid', [
+$route->post('/check/iCheck/:id/:subid', [
   'uses' => 'checkController@checkTest',
   'permission' => ['admin']
 ]);
 
-$router->post('/login', [
+$route->post('/login', [
   'uses' => 'userController@login'
 ]);
 
-$router->post('/refresh-token', [
+$route->post('/refresh-token', [
   'uses' => 'userController@refreshToken'
 ]);
 
-$router->get('/clearToken', [
+$route->get('/clearToken', [
   'uses' => 'userController@logout'
 ]);
 
-$router->get('/getCheck', [
+$route->get('/getCheck', [
   'uses' => 'checkController@checkMore'
 ]);
 
-$router->get('/checkFileLoad', [
+$route->get('/checkFileLoad', [
   'uses' => 'checkController@checkFileLoad'
 ]);
 
-$router->start();
+$route->start();
 
