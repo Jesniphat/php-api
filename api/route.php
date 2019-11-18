@@ -3,6 +3,9 @@ include_once './bootstrap/app.php';
 
 /**
  * Route
+ * Permission array is list of user type who can access that controller
+ * Permission [] is user have to login to access that controller
+ * Not set permission is every one can access that controller
  */
 $route->post('/check/iCheck/:id/:subid', [
   'uses' => 'checkController@checkTest',
