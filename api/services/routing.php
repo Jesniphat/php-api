@@ -49,7 +49,7 @@ class router {
     include_once './controllers/' . $controller[0] . '.php';
     $continue = ['access' => true, 'user' => null];
 
-    if (isset($permission) && count($permission) > 0) {
+    if (isset($permission) || count($permission) > 0) {
       $continue = self::checkPermission($permission);
     }
 
