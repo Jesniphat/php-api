@@ -112,7 +112,7 @@ class permission {
 
       if (!$decoded) {
         throw new Exception('No token.');
-      } else if (count($permission) > 0 && in_array($decoded->data->role, $permission)) {
+      } else if (count($permission) === 0 || in_array($decoded->data->role, $permission)) {
         return [
           'access' => true,
           'user' => [
@@ -237,12 +237,12 @@ class permission {
    */
   public function getToken(array $permission) {
     try {
-      if (count($permission) == 0) {
-        return [
-          'access' => true,
-          'user' => []
-        ];
-      }
+      // if (count($permission) == 0) {
+      //   return [
+      //     'access' => true,
+      //     'user' => []
+      //   ];
+      // }
 
       $token = $this->readToken($permission);
 

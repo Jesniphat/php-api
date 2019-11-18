@@ -41,7 +41,7 @@ class router {
    * @param array $permission
    * @return json
    */
-  public static function method($controller, $permission = []) {
+  public static function method($controller, $permission = null) {
     $base = new BaseController();
 
     $controller = explode('@', $controller);
@@ -49,7 +49,7 @@ class router {
     include_once './controllers/' . $controller[0] . '.php';
     $continue = ['access' => true, 'user' => null];
 
-    if (isset($permission) || count($permission) > 0) {
+    if (isset($permission)) {
       $continue = self::checkPermission($permission);
     }
 
