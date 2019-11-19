@@ -48,7 +48,7 @@ For apache
 
 
 DB Config
-=================================
+-------------------------------
 If use mysql 8 have to create new user and set password type at mysql_native_password
 
 ```
