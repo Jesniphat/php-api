@@ -6,7 +6,7 @@ services:
     restart: always
     volumes:
       - ./api/:/var/www/html/api
-      - ./index.php://var/www/html/index.php
+      # - ./index.php:/var/www/html/index.php
     environment:
       - TZ=Asia/Bangkok
     expose:
@@ -20,7 +20,7 @@ services:
       - ./nginx/conf/nginx.conf:/etc/nginx/conf/nginx.conf
       - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
       - ./api/:/var/www/html/api
-      - ./index.php://var/www/html/index.php
+      # - ./index.php:/var/www/html/index.php
     links:
       - api
     ports:
