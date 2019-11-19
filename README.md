@@ -46,5 +46,12 @@ For apache
     $ docker-compose up -d --build
 ```
 
-:note -> need to use mysql 5 for now
+
+DB Config
+=================================
+If use mysql 8 have to create new user and set password type at mysql_native_password
+
+```
+    CREATE USER 'any_nativeuser'@'localhost'IDENTIFIED WITH mysql_native_password BY 'any_password';
+```
     
