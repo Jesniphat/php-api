@@ -5,14 +5,17 @@ Build by pure php and use alwex/php-database-migration https://github.com/alwex/
 Installing it to your project
 -----------------------------
 Clone project from git.
+
 Install pagkage.
+
 Run migrate db stuff
 ```
     RUN:
     git clone git@github.com:Jesniphat/php-api.git
 
     RUN:
-    composer update 
+    composer update
+    'Mark sure it have bin folder in project'
 
     RUN:
     ./bin/migrate migrate:addenv
