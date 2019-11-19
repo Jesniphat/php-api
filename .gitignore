@@ -1,1 +1,3 @@
 /api/vendor
+/api/bin/migrate
+/api/.php-database-migration/environments/*.yml

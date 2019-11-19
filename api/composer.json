@@ -1,5 +1,16 @@
 {
-    "require": {
-        "firebase/php-jwt": "^5.0"
+  "name": "jesse/api_projects",
+  "authors": [
+    {
+      "name": "Jesniphat Pukkham",
+      "email": "jesniphat@hotmail.com"
     }
+  ],
+  "require": {
+    "firebase/php-jwt": "^5.0",
+    "php-database-migration/php-database-migration" :"^3.6"
+  },
+  "config": {
+    "bin-dir": "bin"
+  }
 }

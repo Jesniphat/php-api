@@ -1,0 +1,4 @@
+run ./bin/migrate migrate:addenv
+
+To gen environments .yml file.
+Then .yml file will here
