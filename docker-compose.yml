@@ -5,7 +5,7 @@ services:
     container_name: api
     restart: always
     volumes:
-      - ./api/:/var/www/html
+      - ./api/:/var/www/html/api/
     ports:
       - 1010:80
     environment:

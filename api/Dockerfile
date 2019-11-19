@@ -1,5 +1,8 @@
 FROM php:7.3-apache
+# NGINX
+# FROM php:7.3-fpm
 
+# Disable when use nginx
 RUN a2enmod rewrite
 
 #Install คำสั่งสำหรับการลง package ที่ laravel required ไว้นะครับ
@@ -45,3 +48,7 @@ RUN curl -sS https://getcomposer.org/installer | \
 RUN echo 'export COMPOSER_ALLOW_SUPERUSER=1' >> ~/.bashrc
 
 RUN echo date.timezone=Asia/Bangkok > /usr/local/etc/php/conf.d/timezone.ini
+
+# Enable when use nginx
+# EXPOSE 9000
+# CMD ["php-fpm"]
