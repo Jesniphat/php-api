@@ -6,20 +6,19 @@ Installing it to your project
 -----------------------------
 Clone project from git.
 
-Install pagkage. "*Mark sure it have bin folder in project"
+Install pagkage. *Mark sure it have bin folder in project
 
 Run migrate db stuff
 ```
     RUN:
-    git clone git@github.com:Jesniphat/php-api.git
+    $ git clone git@github.com:Jesniphat/php-api.git
+
+    RUN: -- Mark sure it have bin folder in project
+    $ composer update
 
     RUN:
-    composer update
-    -- Mark sure it have bin folder in project
-
-    RUN:
-    ./bin/migrate migrate:addenv
-    ./bin/migrate migrate:init [env]
+    $ ./bin/migrate migrate:addenv
+    $ ./bin/migrate migrate:init [env]
 ```
 
 
@@ -28,7 +27,7 @@ Dev
 Run for dev
 ```
     RUN:
-        php -S localhost:8090 -t ./api
+    $ php -S localhost:8090 -t ./api
 ```
 
 Prod
@@ -38,13 +37,13 @@ Need docker compose
 For nginx: Change docker-compose(nginx).yml to docker-compose.yml
 ```
     RUN:
-    docker-compose up -d --build
+    $ docker-compose up -d --build
 ```
 
 For apache
 ```
     RUN:
-    docker-compose up -d --build
+    $ docker-compose up -d --build
 ```
 
 :note -> need to use mysql 5 for now
