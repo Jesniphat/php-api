@@ -6,7 +6,7 @@ Installing it to your project
 -----------------------------
 Clone project from git.
 
-Install pagkage.
+Install pagkage. "*Mark sure it have bin folder in project"
 
 Run migrate db stuff
 ```
@@ -15,7 +15,7 @@ Run migrate db stuff
 
     RUN:
     composer update
-    'Mark sure it have bin folder in project'
+    -- Mark sure it have bin folder in project
 
     RUN:
     ./bin/migrate migrate:addenv
