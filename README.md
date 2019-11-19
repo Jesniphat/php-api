@@ -52,6 +52,6 @@ DB Config
 If use mysql 8 have to create new user and set password type at mysql_native_password
 
 ```
-    CREATE USER 'any_nativeuser'@'localhost'IDENTIFIED WITH mysql_native_password BY 'any_password';
+    CREATE USER 'any_user'@'mysql_host_ip_server' IDENTIFIED WITH mysql_native_password BY 'any_password';
 ```
     
