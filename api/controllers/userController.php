@@ -17,7 +17,14 @@ class userController extends BaseController {
 
   public function login() {
     try {
-      // $permission = new permission();
+      if (empty($this->request['body'])) {
+        throw new Exception('No body, username and password');
+      }
+
+      if ($this->request['body']['username'] !== 'Jesse' || $this->request['body']['password'] !== 'password') {
+        throw new Exception('Username Or Password Wrong');
+      }
+      // Select User from db befor here may have to crater model for query db.
       $user = [
         'id' => 1,
         'name' => 'Jesse',

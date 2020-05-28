@@ -30,6 +30,16 @@ Run for dev
     $ php -S localhost:8090 -t ./api
 ```
 
+Check Post to login
+```
+    curl --location --request POST 'localhost:8090/api/login' \
+         --header 'Content-Type: application/json' \
+         --data-raw '{
+            "username": "Jesse",
+            "password": "password"
+        }'
+```
+
 Prod
 -------------------------------
 Need docker compose
