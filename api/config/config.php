@@ -1,7 +1,7 @@
 <?php
   class config {
-    public $HOST = '';
-    public $DB = '';
-    public $USERNAME = '';
-    public $PASSWORD = '';
+    public $HOST = '127.0.0.1:3308';
+    public $DB = 'php-api';
+    public $USERNAME = 'myapi';
+    public $PASSWORD = 'p@ssw0rd';
   }

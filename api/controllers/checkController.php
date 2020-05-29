@@ -27,4 +27,27 @@ class checkController extends BaseController {
       'path' => $file,
     ], 200);
   }
+
+  public function myapiInsert() {
+    DB::connect();
+    DB::$pdo->beginTransaction();
+    try {
+      DB::$pdo->exec('insert into users (id, name) values (\'10\', \'Jesse\')');
+      // commit the transaction
+      // print_r(DB::$pdo);
+      DB::$pdo->commit();
+      DB::disconnect();
+      return $this->response([
+        'ok' => true
+      ], 200);
+    } catch (Exception $err) {
+      // roll back the transaction if something failed
+      DB::$pdo->rollback();
+      DB::disconnect();
+      return $this->response([
+        'error' => true,
+        'message' => $e->getMessage()
+      ], 400);
+    }
+  }
 }

@@ -18,6 +18,11 @@ $route->post('/check/iCheck/:id/:subid', [
   'permission' => ['admin']
 ]);
 
+$route->post('/myapiInsert', [
+  'uses' => 'checkController@myapiInsert',
+  'permission' => ['admin']
+]);
+
 $route->post('/login', [
   'uses' => 'userController@login'
 ]);
