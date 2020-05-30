@@ -3,6 +3,7 @@
 namespace Controllers;
 use Services\BaseController;
 use Database\DB;
+use Exception;
 
 class checkController extends BaseController {
   public $request;
