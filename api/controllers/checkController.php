@@ -30,11 +30,17 @@ class checkController extends BaseController {
 
   public function myapiInsert() {
     DB::connect();
-    DB::$pdo->beginTransaction();
     try {
-      DB::$pdo->exec('insert into users (id, name) values (\'10\', \'Jesse\')');
-      // commit the transaction
-      // print_r(DB::$pdo);
+      DB::$pdo->beginTransaction();
+
+      $data = [
+        'id' => 12,
+        'name' => 'Jesse'
+      ];
+      $sql = 'INSERT INTO users (id, name) VALUES (:id, :name)';
+      $stmt= DB::$pdo->prepare($sql);
+      $stmt->execute($data);
+      
       DB::$pdo->commit();
       DB::disconnect();
       return $this->response([
