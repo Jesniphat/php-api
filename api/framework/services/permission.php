@@ -6,7 +6,7 @@ use \Firebase\JWT\ExpiredException;
 use \Firebase\JWT\SignatureInvalidException;
 use Exception;
 
-class permission {
+class Permission {
   public $lock = "p@ssw0rd";
   public $requestHeader = [];
   public $jwtRequest = [];

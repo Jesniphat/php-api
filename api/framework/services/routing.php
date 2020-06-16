@@ -3,7 +3,7 @@
 namespace Framework\Services;
 use \Controllers;
 
-class router {
+class Router {
   /**
    * Request url path
    */

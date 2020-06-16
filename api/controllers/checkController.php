@@ -5,7 +5,7 @@ use Framework\Services\BaseController;
 use Database\DB;
 use Exception;
 
-class checkController extends BaseController {
+class CheckController extends BaseController {
   public $request;
 
   function __construct($request) {

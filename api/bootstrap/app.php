@@ -4,6 +4,7 @@
   header("Access-Control-Max-Age: 3600");
   header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, RefreshToken, X-Requested-With");
   
+  Use Framework\Main\MainFramework;
   /**
    * Inclode libs from vendor forder
    */
@@ -14,11 +15,9 @@
    */
   include_once './config/config.php';
   include_once './database/db.php';
-  include_once './framework/main/main.php';
-
-  Use Framework\Main\main;
+  include_once './framework/main/mainFramework.php';
   
-  class apps extends main {
+  class Apps extends MainFramework {
     function __construct() {
       parent::__construct();
     }
@@ -28,4 +27,4 @@
     exit;
   }
 
-  $route = new apps();
+  $route = new Apps();

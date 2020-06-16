@@ -14,21 +14,21 @@ include_once './bootstrap/app.php';
  * POST enpoint
  */
 $route->post('/check/iCheck/:id/:subid', [
-  'uses' => 'checkController@checkTest',
+  'uses' => 'CheckController@checkTest',
   'permission' => ['admin']
 ]);
 
 $route->post('/myapiInsert', [
-  'uses' => 'checkController@myapiInsert',
+  'uses' => 'CheckController@myapiInsert',
   'permission' => ['admin']
 ]);
 
 $route->post('/login', [
-  'uses' => 'userController@login'
+  'uses' => 'UserController@login'
 ]);
 
 $route->post('/refresh-token', [
-  'uses' => 'userController@refreshToken'
+  'uses' => 'UserController@refreshToken'
 ]);
 
 
@@ -43,15 +43,15 @@ $route->post('/refresh-token', [
  * GET enpoint
  */
 $route->get('/clearToken', [
-  'uses' => 'userController@logout'
+  'uses' => 'UserController@logout'
 ]);
 
 $route->get('/getCheck', [
-  'uses' => 'checkController@checkMore'
+  'uses' => 'CheckController@checkMore'
 ]);
 
 $route->get('/checkFileLoad', [
-  'uses' => 'checkController@checkFileLoad'
+  'uses' => 'CheckController@checkFileLoad'
 ]);
 
 

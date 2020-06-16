@@ -2,17 +2,17 @@
 
 namespace Controllers;
 use Framework\Services\BaseController;
-use Framework\Services\permission;
+use Framework\Services\Permission;
 use Exception;
 
-class userController extends BaseController {
+class UserController extends BaseController {
   public $request;
   public $permission;
   function __construct($request) {
     $header = apache_request_headers();
 
     $this->request = $request;
-    $this->permission = new permission($header);
+    $this->permission = new Permission($header);
   }
 
   public function login() {

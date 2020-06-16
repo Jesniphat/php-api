@@ -1,13 +1,13 @@
 <?php
   namespace Framework\Main;
 
+  use Framework\Services\Router;
+
   include_once './framework/services/baseController.php';
   include_once './framework/services/routing.php';
   include_once './framework/services/permission.php';
   
-  use Framework\Services\router;
-  
-  class main {
+  class MainFramework {
     private $req;
     private $request_uri = [];
     private $uri_list = [];
@@ -83,7 +83,7 @@
       }
 
       if (count($this->request) > 0) {
-        router::request($this->request);
+        Router::request($this->request);
       }
 
       $request_list_data = [];
@@ -94,7 +94,7 @@
       }
 
       if (count($request_list_data) > 0) {
-        router::setUrlList($request_list_data);
+        Router::setUrlList($request_list_data);
       }
 
       return true;
@@ -114,11 +114,11 @@
       }
 
       if (!isset($options['uses'])) {
-        router::usesNotFound();
+        Router::usesNotFound();
       } else if (isset($options['permission'])) {
-        router::method($options['uses'], $options['permission']);
+        Router::method($options['uses'], $options['permission']);
       } else {
-        router::method($options['uses']);
+        Router::method($options['uses']);
       }
 
       return true;
@@ -138,11 +138,11 @@
       }
 
       if (!isset($options['uses'])) {
-        router::usesNotFound();
+        Router::usesNotFound();
       } else if (isset($options['permission'])) {
-        router::method($options['uses'], $options['permission']);
+        Router::method($options['uses'], $options['permission']);
       } else {
-        router::method($options['uses']);
+        Router::method($options['uses']);
       }
 
       return true;
@@ -162,11 +162,11 @@
       }
 
       if (!isset($options['uses'])) {
-        router::usesNotFound();
+        Router::usesNotFound();
       } else if (isset($options['permission'])) {
-        router::method($options['uses'], $options['permission']);
+        Router::method($options['uses'], $options['permission']);
       } else {
-        router::method($options['uses']);
+        Router::method($options['uses']);
       }
 
       return true;
@@ -186,11 +186,11 @@
       }
 
       if (!isset($options['uses'])) {
-        router::usesNotFound();
+        Router::usesNotFound();
       } else if (isset($options['permission'])) {
-        router::method($options['uses'], $options['permission']);
+        Router::method($options['uses'], $options['permission']);
       } else {
-        router::method($options['uses']);
+        Router::method($options['uses']);
       }
 
       return true;
@@ -285,7 +285,7 @@
       }
 
       if (!$is_success) {
-        router::methodNonFound();
+        Router::methodNonFound();
       }
     }
 
