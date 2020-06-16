@@ -1,8 +1,8 @@
 <?php
 
 namespace Controllers;
-use Services\BaseController;
-use Services\permission;
+use Framework\Services\BaseController;
+use Framework\Services\permission;
 use Exception;
 
 class userController extends BaseController {

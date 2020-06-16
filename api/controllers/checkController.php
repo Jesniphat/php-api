@@ -1,7 +1,7 @@
 <?php
 
 namespace Controllers;
-use Services\BaseController;
+use Framework\Services\BaseController;
 use Database\DB;
 use Exception;
 
@@ -35,7 +35,7 @@ class checkController extends BaseController {
       DB::$pdo->beginTransaction();
 
       $data = [
-        'id' => 12,
+        'id' => 3,
         'name' => 'Jesse'
       ];
       $sql = 'INSERT INTO users (id, name) VALUES (:id, :name)';
@@ -47,7 +47,7 @@ class checkController extends BaseController {
       return $this->response([
         'ok' => true
       ], 200);
-    } catch (Exception $err) {
+    } catch (Exception $e) {
       // roll back the transaction if something failed
       DB::$pdo->rollback();
       DB::disconnect();

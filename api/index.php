@@ -1,2 +1,2 @@
 <?php
-include_once './route.php';
+include_once './router/web.php';
